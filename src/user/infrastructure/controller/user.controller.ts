@@ -7,7 +7,7 @@ export class UserController {
   public signUp = async (req: Request, res: Response) => {
     try {
       const user = await this.userUseCase.makeSignUp(req.body);
-      res.send({ user });
+      res.send({ success: true, data: user });
     } catch (err: any) {
       if (err.name === "SequelizeUniqueConstraintError") {
         res.status(400).json({
@@ -26,7 +26,7 @@ export class UserController {
   public listAll = async (req: Request, res: Response) => {
     try {
       const users = await this.userUseCase.makeListAll();
-      res.send({ users });
+      res.send({ success: true, data: users });
     } catch (error: any) {
       res.status(500).json({
         success: false,
@@ -40,7 +40,7 @@ export class UserController {
     try {
       const user = await this.userUseCase.logIn(email, password);
       if (user) {
-        res.send({ user });
+        res.send({ success: true, data: user });
       } else {
         res.status(404).json({
           success: false,
